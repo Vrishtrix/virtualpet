@@ -12,6 +12,7 @@ datasource db {
 
 model AuthUser {
   id					String    		@id @unique
+  username				String
   auth_session 			AuthSession[]
   auth_key     			AuthKey[]
 
