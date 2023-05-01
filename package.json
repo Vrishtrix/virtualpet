@@ -12,6 +12,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"prisma": "^4.13.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
@@ -20,6 +21,10 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@master/css.svelte": "^2.0.0-beta.142"
+		"@lucia-auth/adapter-prisma": "^2.0.0",
+		"@master/css.svelte": "^2.0.0-beta.142",
+		"@master/normal.css": "^2.0.0-beta.142",
+		"@prisma/client": "^4.13.0",
+		"lucia-auth": "^1.5.0"
 	}
 }
