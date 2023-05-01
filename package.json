@@ -22,6 +22,7 @@
 	"type": "module",
 	"dependencies": {
 		"@lucia-auth/adapter-prisma": "^2.0.0",
+		"@lucia-auth/oauth": "^1.0.1",
 		"@master/css.svelte": "^2.0.0-beta.142",
 		"@master/normal.css": "^2.0.0-beta.142",
 		"@prisma/client": "^4.13.0",
