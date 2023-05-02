@@ -9,3 +9,9 @@
 <LazyCSSProvider config={loadConfig}>
 	<slot />
 </LazyCSSProvider>
+
+<style>
+	:global(body) {
+		background-color: #2f2e30;
+	}
+</style>
