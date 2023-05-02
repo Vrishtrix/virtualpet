@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from '../$types';
+import type { Actions, PageServerLoad } from '../$types';
 
 import { prisma } from '$lib/server/prisma';
 
@@ -28,4 +28,31 @@ export const load: PageServerLoad = async ({ locals }) => {
 		user,
 		petdata,
 	};
+};
+
+export const actions: Actions = {
+	createpet: async ({ request, locals }) => {
+		const { user } = await locals.auth.validateUser();
+
+		const data = await request.formData();
+
+		const pet_name = data.get('pet_name') as string;
+
+		if (!pet_name) {
+			return {
+				error: 'Please enter a pet name',
+			};
+		}
+
+		await prisma.pet.create({
+			data: {
+				name: pet_name,
+				ownerId: user.userId,
+			},
+		});
+
+		return {
+			success: true,
+		};
+	},
 };
