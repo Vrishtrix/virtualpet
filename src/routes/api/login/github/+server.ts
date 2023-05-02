@@ -1,35 +1,19 @@
-import { auth, githubAuth } from '$lib/server/lucia';
-import { redirect, type RequestHandler } from '@sveltejs/kit';
+import { githubAuth } from '$lib/server/lucia';
 
-export const GET: RequestHandler = async ({ cookies, url, locals }) => {
-	const code = url.searchParams.get('code') as string;
-	const state = url.searchParams.get('state') as string;
+import type { RequestHandler } from '@sveltejs/kit';
 
-	const storedState = cookies.get('github_oauth_state');
+export const GET: RequestHandler = async ({ cookies }) => {
+	const [url, state] = await githubAuth.getAuthorizationUrl();
 
-	if (state !== storedState) throw new Response(null, { status: 401 });
+	cookies.set('github_oauth_state', state, {
+		path: '/',
+		maxAge: 60 * 60,
+	});
 
-	try {
-		const { existingUser, providerUser, createUser } =
-			await githubAuth.validateCallback(code);
-
-		const getUser = async () => {
-			if (existingUser) return existingUser;
-
-			return await createUser({
-				username: providerUser.login,
-			});
-		};
-
-		const user = await getUser();
-		const session = await auth.createSession(user.userId);
-
-		locals.auth.setSession(session);
-	} catch (e) {
-		return new Response(null, {
-			status: 500,
-		});
-	}
-
-	throw redirect(302, '/');
+	return new Response(null, {
+		status: 302,
+		headers: {
+			location: url.toString(),
+		},
+	});
 };

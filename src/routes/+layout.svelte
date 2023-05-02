@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { LazyCSSProvider } from "@master/css.svelte";
+	import { LazyCSSProvider } from '@master/css.svelte';
 
-  import "@master/normal.css/dist/index.css";
+	import '@master/normal.css/dist/index.css';
 
-  const loadConfig = import("../master.css");
+	const loadConfig = import('../master.css');
 </script>
 
 <LazyCSSProvider config={loadConfig}>
-  <slot />
+	<slot />
 </LazyCSSProvider>
