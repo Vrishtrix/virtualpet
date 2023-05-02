@@ -13,10 +13,22 @@ datasource db {
 model AuthUser {
   id					String    		@id @unique
   username				String
+  pets					Pet?
   auth_session 			AuthSession[]
   auth_key     			AuthKey[]
 
   @@map("users")
+}
+
+model Pet {
+	id					String			@id @default(cuid())
+	name				String
+	health				Float			@default(50.0)
+	hunger				Float			@default(50.0)
+	happiness			Float			@default(50.0)
+	age 				Int				@default(0)
+	owner				AuthUser?		@relation(fields: [ownerId], references: [id])
+	ownerId				String			@unique
 }
 
 model AuthSession {
